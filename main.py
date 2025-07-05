@@ -12,24 +12,36 @@ def main():
 
     client = genai.Client(api_key=api_key)
 
-    prompt = getPrompt()
+    prompt, verbose = get_inputs()
     if prompt:
 
         messages = [types.Content(role="user", parts=[types.Part(text=prompt)])]
         response = client.models.generate_content(model="gemini-2.0-flash-001", contents=messages)
-        
+
         print(response.text)
-        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-        print("Response tokens:", response.usage_metadata.candidates_token_count)
+        if verbose:
+            show_response_details(prompt, response)
     
     else:
         print("Error: Missing Prompt")
         exit(1)
 
-def getPrompt():
+def show_response_details(prompt, response):
+    print(f"User prompt: {prompt}")
+    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+    print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+
+def get_inputs():
+    verbose = False
+
     if len(argv) >= 2:
-        return argv[1]
-    return None
+        if not argv[1].startswith("-"):
+            if "--verbose" in argv:
+                verbose = True
+
+            return argv[1], verbose
+    
+    return None, verbose
 
 if __name__ == "__main__":
     main()
