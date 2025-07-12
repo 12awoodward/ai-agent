@@ -1,15 +1,22 @@
 import os
 
 def get_files_info(working_directory, directory=None):
-    header = f"Result for '{directory}' directory:\n".replace("'.'", "current")
-    try:
-        full_path = os.path.join(working_directory, directory)
+    if not directory:
+        directory = "."
 
-        if not os.path.abspath(full_path).startswith(os.path.abspath(working_directory)):
+    header = f"Result for '{directory}' directory:\n"
+    try:
+        full_path = os.path.abspath(os.path.join(working_directory, directory))
+        full_working = os.path.abspath(working_directory)
+
+        if not full_path.startswith(full_working):
             return f'{header} Error: Cannot list "{directory}" as it is outside the permitted working directory'
         
         if not os.path.isdir(full_path):
             return f'{header} Error: "{directory}" is not a directory'
+        
+        if full_path == full_working:
+            header = f"Result for current directory:\n"
         
         contents = []
         for item in os.listdir(full_path):
