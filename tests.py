@@ -4,46 +4,53 @@ from functions.write_file import write_file
 from functions.run_python import run_python_file
 
 def test():
-    # pass
+    working = "calculator"
 
     # -- get_files_info
-    # print(get_files_info("calculator", "."))
-    # print()
-    # print(get_files_info("calculator", "pkg"))
-    # print()
-    # print(get_files_info("calculator", "/bin"))
-    # print()
-    # print(get_files_info("calculator", "../"))
-    # print()
-    # print(get_files_info("calculator"))
+    info_tests = [
+        ".",
+        "pkg",
+        "/bin",
+        "../",
+        None,
+    ]
+    # for t in info_tests:
+    #     print(get_files_info(working, t))
+    #     print()
 
     # -- get_file_content
-    # print(get_file_content("calculator", "main.py"))
-    # print()
-    # print(get_file_content("calculator", "pkg/calculator.py"))
-    # print()
-    # print(get_file_content("calculator", "/bin/cat"))
-    # print()
-    # print(get_file_content("calculator", "lorem.txt"))
+    content_tests = [
+        "main.py",
+        "pkg/calculator.py",
+        "/bin/cat",
+        "lorem.txt",
+    ]
+    # for t in content_tests:
+    #     print(get_file_content(working, t))
+    #     print()
 
     # -- write_file
-    # print()
-    # print(write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum"))
-    # print()
-    # print(write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"))
-    # print()
-    # print(write_file("calculator", "/tmp/temp.txt", "this should not be allowed"))
-    # print()
-    # print(write_file("calculator", "pkg", "this should not be allowed"))
+    write_tests = [
+        ("lorem.txt", "wait, this isn't lorem ipsum"),
+        ("pkg/morelorem.txt", "lorem ipsum dolor sit amet"),
+        ("/tmp/temp.txt", "this should not be allowed"),
+        ("pkg", "this should not be allowed"),
+    ]
+    # for t in write_tests:
+    #     print(write_file(working, t[0], t[1]))
+    #     print()
 
-    # -- run_python_file
-    print(run_python_file("calculator", "main.py"))
-    print()
-    print(run_python_file("calculator", "tests.py"))
-    print()
-    print(run_python_file("calculator", "../main.py"))
-    print()
-    print(run_python_file("calculator", "nonexistant.py"))
+    # # -- run_python_file
+    run_tests = [
+        "main.py",
+        "tests.py",
+        "../main.py",
+        "nonexistent.py",
+    ]
+    for t in run_tests:
+        print(run_python_file(working, t))
+        print()
+
 
 if __name__ == "__main__":
     test()
